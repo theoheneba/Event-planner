@@ -4,10 +4,11 @@ import { EventForm } from './components/EventForm';
 import { VendorList } from './components/VendorList';
 import { AuthForm } from './components/AuthForm';
 import { Dashboard } from './components/Dashboard';
+import { LandingPage } from './components/LandingPage';
 import { useAuth } from './contexts/AuthContext';
 import { Toaster } from 'react-hot-toast';
 
-function App() {
+export default function App() {
   const [activeTab, setActiveTab] = useState<'dashboard' | 'events' | 'vendors'>('dashboard');
   const { user, loading } = useAuth();
 
@@ -74,31 +75,15 @@ function App() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {!user ? (
-          <div className="max-w-md mx-auto">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6 text-center">Welcome to Smart Event Planner</h2>
-            <p className="text-center text-gray-600 mb-8">Sign in to start planning your next amazing event!</p>
-            <AuthForm />
-          </div>
+          <LandingPage />
         ) : (
           <>
             {activeTab === 'dashboard' && <Dashboard />}
-            {activeTab === 'events' && (
-              <div className="max-w-3xl mx-auto">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-6">Create New Event</h2>
-                <EventForm />
-              </div>
-            )}
-            {activeTab === 'vendors' && (
-              <div>
-                <h2 className="text-2xl font-semibold text-gray-900 mb-6">Available Vendors</h2>
-                <VendorList />
-              </div>
-            )}
+            {activeTab === 'events' && <EventForm />}
+            {activeTab === 'vendors' && <VendorList />}
           </>
         )}
       </main>
     </div>
   );
 }
-
-export default App; // Ensure this line is present
